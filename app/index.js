@@ -42,18 +42,18 @@ getHands().forEach((hand, i) => {
 clock.granularity = "seconds";
 clock.ontick = (evt) => {
   const arcRatios = getArcRatios(evt.date, is24Hour);
-  
+
   getArcs().forEach((arc, i) => {
     arc.sweepAngle = arcRatios[i] * 360;
   });
-  
+
   getHands().forEach((hand, i) => {
     const length = (i + 2) * distanceBetweenArcs;
     hand.x2 = xCenter + Math.sin(arcRatios[i] * 2 * Math.PI) * length;
     hand.y2 = yCenter - Math.cos(arcRatios[i] * 2 * Math.PI) * length;
   });
-  
-  getText().text = getTime(evt.date);
+
+  getText().text = getTime(evt.date, is24Hour);
 }
 
 function getArcs() {
