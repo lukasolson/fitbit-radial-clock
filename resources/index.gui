@@ -1,0 +1,14 @@
+<svg id="screen">
+  <!-- Arcs -->
+  <arc id="hourArc" class="arc" start-angle="0" />
+  <arc id="minuteArc" class="arc" start-angle="0" />
+  <arc id="secondArc" class="arc" start-angle="0" />
+  
+  <!-- Hands -->
+  <line id="hourHand" class="hand" stroke-width="10" />
+  <line id="minuteHand" class="hand" stroke-width="5" />
+  <line id="secondHand" class="hand" stroke-width="2" />
+  
+  <!-- Text -->
+  <text id="text" class="text" text-length="5" x="50%" text-anchor="middle" font-family="System-Regular" font-size="30"></text>
+</svg>
