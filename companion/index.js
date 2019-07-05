@@ -9,13 +9,15 @@ const defaultSettings = {
   "minuteHand.color": "#FFA726",
   "secondHand.color": "#EF5350",
   "text.color": "white",
+  "ticks.color": "white",
   "hourArc.visible": true,
   "minuteArc.visible": true,
   "secondArc.visible": true,
   "hourHand.visible": false,
   "minuteHand.visible": false,
   "secondHand.visible": false,
-  "text.visible": true
+  "text.visible": true,
+  "ticks.visible": false
 };
 
 Object.keys(defaultSettings).forEach(key => {

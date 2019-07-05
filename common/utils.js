@@ -17,3 +17,15 @@ function getHours(date, is24Hour = true) {
   if (hours % 12 === 0) return 12;
   return hours % 12;
 }
+
+function radian(ratio) {
+  return 2 * Math.PI * ratio;
+}
+
+export function sin(ratio) {
+  return Math.sin(radian(ratio));
+}
+
+export function cos(ratio) {
+  return Math.cos(radian(ratio));
+}

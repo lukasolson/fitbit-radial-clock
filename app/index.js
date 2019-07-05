@@ -1,7 +1,7 @@
 import clock from "clock";
 import document from "document";
 import * as messaging from "messaging";
-import { getArcRatios, getTime } from "../common/utils";
+import { getArcRatios, getTime, cos, sin } from "../common/utils";
 
 const svg = document.getElementById("screen");
 const width = Math.min(svg.width, svg.height);
@@ -20,12 +20,10 @@ messaging.peerSocket.onmessage = ({data: {key, value}}) => {
   const el = document.getElementById(id);
   if (settingKey === "visible") {
     el.style.visibility = settings[key] ? "visible" : "hidden";
-  } else if (id === "text") {
-    el.style.fill = settings[key];
   } else {
     el.style.fill = settings[key];
   }
-}
+};
 
 getArcs().forEach((arc, i) => {
   arc.arcWidth = Math.floor(distanceBetweenArcs / 2);
@@ -39,8 +37,15 @@ getHands().forEach((hand, i) => {
   hand.y1 = yCenter;
 });
 
+getTicks().forEach((tick, i, ticks) => {
+  tick.x1 = xCenter + sin(i / ticks.length) * distanceBetweenArcs * 3;
+  tick.y1 = yCenter - cos(i / ticks.length) * distanceBetweenArcs * 3;
+  tick.x2 = xCenter + sin(i / ticks.length) * distanceBetweenArcs * 4;
+  tick.y2 = yCenter - cos(i / ticks.length) * distanceBetweenArcs * 4;
+});
+
 clock.granularity = "seconds";
-clock.ontick = (evt) => {
+clock.ontick = evt => {
   const arcRatios = getArcRatios(evt.date, is24Hour);
 
   getArcs().forEach((arc, i) => {
@@ -49,15 +54,19 @@ clock.ontick = (evt) => {
 
   getHands().forEach((hand, i) => {
     const length = (i + 2) * distanceBetweenArcs;
-    hand.x2 = xCenter + Math.sin(arcRatios[i] * 2 * Math.PI) * length;
-    hand.y2 = yCenter - Math.cos(arcRatios[i] * 2 * Math.PI) * length;
+    hand.x2 = xCenter + sin(arcRatios[i]) * length;
+    hand.y2 = yCenter - cos(arcRatios[i]) * length;
   });
 
   getText().text = getTime(evt.date, is24Hour);
-}
+};
 
 function getArcs() {
   return document.getElementsByClassName("arc");
+}
+
+function getTicks() {
+  return document.getElementsByClassName("tick");
 }
 
 function getHands() {
@@ -65,13 +74,5 @@ function getHands() {
 }
 
 function getText() {
-  return document.getElementsByClassName("text")[0];
-}
-
-function isVisible({id}) {
-  return settings[`${id}.visible`];
-}
-
-function getColor({id}) {
-  return settings[`${id}.color`] || "white";
+  return document.getElementById("text");
 }

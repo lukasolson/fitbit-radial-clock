@@ -40,7 +40,19 @@ function mySettings(props) {
           colors={colorOptions}
         />
       </Section>
-      
+
+      <Section title={<Text bold align="center">Tick settings</Text>}>
+        <Toggle
+            settingsKey="ticks.visible"
+            label="Show ticks"
+        />
+        <Text>Tick color</Text>
+        <ColorSelect
+            settingsKey="ticks.color"
+            colors={colorOptions}
+        />
+      </Section>
+
       <Section title={<Text bold align="center">Hand settings</Text>}>
         <Toggle
           settingsKey="hourHand.visible"
@@ -70,7 +82,7 @@ function mySettings(props) {
           colors={colorOptions}
         />
       </Section>
-      
+
       <Section title={<Text bold align="center">Text settings</Text>}>
         <Toggle
           settingsKey="text.visible"
