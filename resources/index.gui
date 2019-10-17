@@ -6,18 +6,18 @@
 
   <!-- Ticks -->
   <g id="ticks" fill="white">
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
-      <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
+    <line class="tick" stroke-width="4" />
   </g>
 
   <!-- Hands -->
