@@ -1,8 +1,8 @@
 export function getArcRatios(date, is24Hour = true) {
-	const secs = date.getSeconds() / 60;
-	const mins = (date.getMinutes() + secs) / 60;
-	const hours = (date.getHours() + mins);
-	return [is24Hour ? hours / 24 : hours % 12 / 12, mins, secs];
+  const secs = date.getSeconds() / 60;
+  const mins = (date.getMinutes() + secs) / 60;
+  const hours = (date.getHours() + mins);
+  return [is24Hour ? hours / 24 : hours % 12 / 12, mins, secs];
 }
 
 export function getTime(date, is24Hour = true) {
