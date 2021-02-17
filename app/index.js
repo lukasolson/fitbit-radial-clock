@@ -12,7 +12,6 @@ const xCenter = Math.floor(svg.width / 2);
 const yCenter = Math.floor(svg.height / 2);
 
 const settings = {}; // See companion/index.js for default settings
-const is24Hour = false;
 
 messaging.peerSocket.onmessage = ({data: {key, value}}) => {
   settings[key] = JSON.parse(value);
@@ -46,7 +45,7 @@ getTicks().forEach((tick, i, ticks) => {
 
 clock.granularity = "seconds";
 clock.ontick = evt => {
-  const arcRatios = getArcRatios(evt.date, is24Hour);
+  const arcRatios = getArcRatios(evt.date);
 
   getArcs().forEach((arc, i) => {
     arc.sweepAngle = arcRatios[i] * 360;
@@ -58,7 +57,7 @@ clock.ontick = evt => {
     hand.y2 = yCenter - cos(arcRatios[i]) * length;
   });
 
-  getText().text = getTime(evt.date, is24Hour);
+  getText().text = getTime(evt.date);
 };
 
 function getArcs() {
