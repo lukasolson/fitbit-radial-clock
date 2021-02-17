@@ -1,7 +1,7 @@
 import clock from "clock";
 import document from "document";
 import * as messaging from "messaging";
-import { getArcRatios, getTime, cos, sin } from "../common/utils";
+import {getArcRatios, getTime, cos, sin} from "../common/utils";
 
 const svg = document.getElementById("screen");
 const width = Math.min(svg.width, svg.height);
@@ -13,16 +13,9 @@ const yCenter = Math.floor(svg.height / 2);
 
 const settings = {}; // See companion/index.js for default settings
 
-messaging.peerSocket.onmessage = ({data: {key, value}}) => {
+messaging.peerSocket.addEventListener("message", ({data: {key, value}}) => {
   settings[key] = JSON.parse(value);
-  const [id, settingKey] = key.split(".");
-  const el = document.getElementById(id);
-  if (settingKey === "visible") {
-    el.style.visibility = settings[key] ? "visible" : "hidden";
-  } else {
-    el.style.fill = settings[key];
-  }
-};
+});
 
 getArcs().forEach((arc, i) => {
   arc.arcWidth = Math.floor(distanceBetweenArcs / 2);
@@ -31,7 +24,7 @@ getArcs().forEach((arc, i) => {
   arc.y = i * distanceBetweenArcs + yOffset;
 });
 
-getHands().forEach((hand, i) => {
+getHands().forEach(hand => {
   hand.x1 = xCenter;
   hand.y1 = yCenter;
 });
@@ -44,20 +37,11 @@ getTicks().forEach((tick, i, ticks) => {
 });
 
 clock.granularity = "seconds";
-clock.ontick = evt => {
-  const arcRatios = getArcRatios(evt.date);
-
-  getArcs().forEach((arc, i) => {
-    arc.sweepAngle = arcRatios[i] * 360;
-  });
-
-  getHands().forEach((hand, i) => {
-    const length = (i + 2) * distanceBetweenArcs;
-    hand.x2 = xCenter + sin(arcRatios[i]) * length;
-    hand.y2 = yCenter - cos(arcRatios[i]) * length;
-  });
-
-  getText().text = getTime(evt.date);
+clock.ontick = ({date}) => {
+  updateArcs(date);
+  updateTicks();
+  updateHands(date);
+  updateText(date);
 };
 
 function getArcs() {
@@ -74,4 +58,41 @@ function getHands() {
 
 function getText() {
   return document.getElementById("text");
+}
+
+function setStyle(element) {
+  if (settings.hasOwnProperty(`${element.id}.visible`)) {
+    element.style.visibility = settings[`${element.id}.visible`] ? "visible" : "hidden";
+  }
+  if (settings.hasOwnProperty(`${element.id}.color`)) {
+    element.style.fill = settings[`${element.id}.color`];
+  }
+}
+
+function updateArcs(date) {
+  const arcRatios = getArcRatios(date);
+  getArcs().forEach((arc, i) => {
+    arc.sweepAngle = arcRatios[i] * 360;
+    setStyle(arc);
+  });
+}
+
+function updateTicks() {
+  setStyle(document.getElementById("ticks"));
+}
+
+function updateHands(date) {
+  const arcRatios = getArcRatios(date, false); // Hands always follow 12-hour clock
+  getHands().forEach((hand, i) => {
+    const length = (i + 2) * distanceBetweenArcs;
+    hand.x2 = xCenter + sin(arcRatios[i]) * length;
+    hand.y2 = yCenter - cos(arcRatios[i]) * length;
+    setStyle(hand);
+  });
+}
+
+function updateText(date) {
+  const text = getText();
+  text.text = getTime(date);
+  setStyle(text);
 }

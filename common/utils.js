@@ -1,20 +1,20 @@
-import {preferences} from 'user-settings';
+import {preferences} from "user-settings";
 
 function is24Hour() {
-  return preferences.clockDisplay === '24h';
+  return preferences.clockDisplay === "24h";
 }
 
-export function getArcRatios(date) {
+export function getArcRatios(date, is24h = is24Hour()) {
   const secs = date.getSeconds() / 60;
   const mins = (date.getMinutes() + secs) / 60;
   const hours = (date.getHours() + mins);
-  return [is24Hour() ? hours / 24 : hours % 12 / 12, mins, secs];
+  return [is24h ? hours / 24 : hours % 12 / 12, mins, secs];
 }
 
 export function getTime(date) {
   const mins = date.getMinutes();
   const hours = getHours(date);
-  return `${hours}:${mins < 10 ? '0' + mins : mins}`;
+  return `${hours}:${mins < 10 ? "0" + mins : mins}`;
 }
 
 function getHours(date) {

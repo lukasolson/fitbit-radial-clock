@@ -5,7 +5,7 @@
   <arc id="secondArc" class="arc" start-angle="0" />
 
   <!-- Ticks -->
-  <g id="ticks" fill="white">
+  <g id="ticks">
     <line class="tick" stroke-width="4" />
     <line class="tick" stroke-width="4" />
     <line class="tick" stroke-width="4" />

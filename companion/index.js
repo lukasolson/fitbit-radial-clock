@@ -1,5 +1,5 @@
 import * as messaging from "messaging";
-import { settingsStorage } from "settings";
+import {settingsStorage} from "settings";
 
 const defaultSettings = {
   "hourArc.color": "#FFEE58",
